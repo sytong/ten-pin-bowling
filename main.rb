@@ -1,4 +1,4 @@
 require_relative 'bowling'
 
-game = Bowling::Game.new
-puts "#{ARGV[0]} => #{game.calculate_scores(ARGV[0])}"
+game = Bowling::Game.new ARGV[0]
+puts "#{ARGV[0]} => #{game.scores}"
