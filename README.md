@@ -1,7 +1,7 @@
 # ten-pin-bowling
 [![Build Status](https://travis-ci.org/sytong/ten-pin-bowling.svg?branch=master)](https://travis-ci.org/sytong/ten-pin-bowling)
 
-Coding Exercise
+This is a coding exercise implementing the [Ten Pin Bowling Scoring](https://en.wikipedia.org/wiki/Ten-pin_bowling#Scoring).
 
 ## Set Up
 Download the code and install minitest
@@ -10,6 +10,13 @@ Download the code and install minitest
     
 
 Run `rake` to execute the tests
+
+## How to run
+The program accepts a string of comma separated integer representing the scores of a bowling game.
+
+    ruby main.rb '10,10,10,10,10,10,10,10,10,10,10,10'
+    
+
 
 ## License
 
