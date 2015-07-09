@@ -1,4 +1,6 @@
 # ten-pin-bowling
+[![Build Status](https://travis-ci.org/sytong/ten-pin-bowling.svg?branch=master)](https://travis-ci.org/sytong/ten-pin-bowling)
+
 Coding Exercise
 
 ## Set Up
