@@ -33,4 +33,10 @@ class TestGame < Minitest::Test
 
   	assert_equal(50, score)
   end
+
+  def test_full_game_2
+  	score = @game.calculate_scores '10,5,5,7,2,5,5,10,10,10,2,3,5,5,7,3,3'
+
+  	assert_equal(168, score)
+  end
 end
