@@ -132,7 +132,7 @@ module Bowling
       if next_frame.throws >= 2
         bonus += next_frame.ball2
       else
-        bonus += @frames[current_idx + 2].ball1
+        bonus += @frames[current_idx + 2].ball1 if current_idx < @frames.size - 2
       end
       bonus
     end

@@ -34,4 +34,16 @@ class TestGame < Minitest::Test
     @game = Bowling::Game.new '10,5,5,7,2,5,5,10,10,10,2,3,5,5,7,3,3'
     assert_equal(168, @game.scores)
   end
+
+  # My interpretation of legal partial games may be wrong....
+  def test_partial_game_1
+  	@game = Bowling::Game.new '10,10'
+  	assert_equal(30, @game.scores)
+  end
+
+  # My interpretation of legal partial games may be wrong....
+  def test_partial_game_2
+  	@game = Bowling::Game.new '10,10,10'
+  	assert_equal(60, @game.scores)
+  end
 end
