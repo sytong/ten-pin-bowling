@@ -96,34 +96,55 @@ module Bowling
 
   # Let's play a bowling game
   class Game
-    # Return the scores of a game based on a comma-separate pins
-    def calculate_scores(pins)
-      parser = Bowling::FrameParser.new
-      frames = parser.parse(pins)
 
-      # A very literal way to implement this
+    # Initialize the game with comma-separated pins
+    # 
+    # @param [String] comma-separated pins assumed to be correct
+    def initialize(pins)
+      parser = Bowling::FrameParser.new
+      @frames = parser.parse(pins)
+    end
+
+    # Return the scores of a game
+    #
+    # @return [Integer] game scores
+    def scores
       total_scores = 0
-      frames.each_with_index do |frame, idx|
+      @frames.each_with_index do |frame, idx|
         bonus = 0
-        if frame.strike?
-          if idx < frames.size - 1
-            next_frame = frames[idx+1]
-            bonus = next_frame.ball1
-            if next_frame.throws >= 2
-              bonus = bonus + next_frame.ball2
-            else
-              bonus = bonus + frames[idx+2].ball1
-            end
-          end
-        elsif frame.spare?
-          if idx < frames.size - 1
-            next_frame = frames[idx+1]
-            bonus = next_frame.ball1
-          end
+        # No bonus if this is alreay the last frame
+        if idx < @frames.size - 1
+          bonus = strike_bonus(idx) if frame.strike?
+          bonus = spare_bonus(idx) if frame.spare?
         end
         total_scores = total_scores + frame.scores + bonus
       end
       total_scores
+    end
+
+    private
+
+    # Return the strike bonus
+    #
+    # @param [Integer] index of the current frame
+    # @return [Integer] bonus scores of a strike frame
+    def strike_bonus(current_idx)
+      next_frame = @frames[current_idx+1]
+      bonus = next_frame.ball1
+      if next_frame.throws >= 2
+        bonus = bonus + next_frame.ball2
+      else
+        bonus = bonus + @frames[current_idx+2].ball1
+      end
+      bonus
+    end
+
+    # Return the spare bonus
+    #
+    # @param [Integer] index of the current frame
+    # @return [Integer] bonus scores of a spare frame
+    def spare_bonus(current_idx)
+      @frames[current_idx+1].ball1
     end
   end
 end
