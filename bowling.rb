@@ -2,6 +2,9 @@
 
 module Bowling
 
+  # A game can only have 10 frames
+  MAX_FRAMES = 10
+
   # A frame in a ten-pin bowling game
   class Frame
     # @return [Integer] the number of pins knocked down by the first ball. Mandatory.
@@ -81,10 +84,10 @@ module Bowling
           frame.knock_down p
           frames << frame
 
-          frame = nil if frame.strike? and frames.size < 10
+          frame = nil if frame.strike? and frames.size < MAX_FRAMES
         else
           frame.knock_down p
-          frame = nil if frames.size < 10
+          frame = nil if frames.size < MAX_FRAMES
         end
       end
       frames
@@ -101,24 +104,24 @@ module Bowling
       # A very literal way to implement this
       total_scores = 0
       frames.each_with_index do |frame, idx|
+        bonus = 0
         if frame.strike?
-          score = frame.ball1
-          next_frame = frames[idx+1]
-          bonus = next_frame.ball1
-          if next_frame.throws >= 2
-            bonus = bonus + next_frame.ball2
-          else
-            bonus = bonus + frames[idx+2].ball1
+          if idx < frames.size - 1
+            next_frame = frames[idx+1]
+            bonus = next_frame.ball1
+            if next_frame.throws >= 2
+              bonus = bonus + next_frame.ball2
+            else
+              bonus = bonus + frames[idx+2].ball1
+            end
           end
-          total_scores = total_scores + score + bonus
         elsif frame.spare?
-          score = frame.ball1 + frame.ball2
-          next_frame = frames[idx+1]
-          bonus = next_frame.ball1
-          total_scores = total_scores + score + bonus
-        else # open_frame, what else?
-          total_scores = total_scores + frame.ball1 + frame.ball2
+          if idx < frames.size - 1
+            next_frame = frames[idx+1]
+            bonus = next_frame.ball1
+          end
         end
+        total_scores = total_scores + frame.scores + bonus
       end
       total_scores
     end
